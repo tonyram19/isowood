@@ -38,8 +38,10 @@ public class GameManager : MonoBehaviour
         score = 0;
         highScore = PlayerPrefs.GetFloat("highScore");
 
-	}
-	
+        ReassignAudioManager();
+
+    }
+
     public void LoseALife()
     {
         if (heartsList.Count > 0)
@@ -51,6 +53,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ReassignAudioManager()
+    {
+        if (audioManager == null)
+        {
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        }
+    }
+
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -59,12 +69,9 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        //if (!quitGameDialog.activeInHierarchy && !quitGameDialog.activeInHierarchy)
-        //{
-            timer += Time.deltaTime;
-            timerText.text = "Time: " + timer.ToString("0.0");
-        //}
-        
+        timer += Time.deltaTime;
+        timerText.text = "Time: " + timer.ToString("0.0");
+
         if (deadTrees >= 3)
         {
             score = timer;
