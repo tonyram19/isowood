@@ -28,16 +28,34 @@ public class Tree : MonoBehaviour
             gameManager.LoseALife();
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit) && Input.GetMouseButtonDown(0))
+        if (Application.platform == RuntimePlatform.Android)
         {
-            if (hit.collider == GetComponent<Collider>())
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                currentScale = initialScale;
+                if (hit.collider == GetComponent<Collider>())
+                {
+                    currentScale = initialScale;
+                }
             }
         }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && Input.GetMouseButtonDown(0))
+            {
+                if (hit.collider == GetComponent<Collider>())
+                {
+                    currentScale = initialScale;
+                }
+            }
+        }
+
+        
 
     }
 

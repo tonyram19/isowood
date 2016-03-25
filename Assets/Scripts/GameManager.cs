@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Api;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
     {
+        LoadAds();
+
         timer = 0f;
         heartsList = new List<GameObject>();
 
@@ -40,6 +43,14 @@ public class GameManager : MonoBehaviour
 
         ReassignAudioManager();
 
+    }
+
+    void LoadAds()
+    {
+        AdSize adSize = new AdSize(250, 40);
+        BannerView bannerView = new BannerView("ca-app-pub-2928229545764146/5535362916", adSize, AdPosition.BottomRight);
+        AdRequest request = new AdRequest.Builder().Build();
+        bannerView.LoadAd(request);
     }
 
     public void LoseALife()
